@@ -126,6 +126,14 @@ defmodule GoodleadsEx do
 
     has_body = operation["requestBody"] != nil
 
+    # Extract query parameters
+    query_params =
+      (operation["parameters"] || [])
+      |> Enum.filter(&(&1["in"] == "query"))
+      |> Enum.map(&{String.to_atom(&1["name"]), &1["description"] || ""})
+
+    has_query_params = query_params != []
+
     # Extract path parameters
     path_params =
       Regex.scan(~r/\{(\w+)\}/, path)
@@ -159,14 +167,41 @@ defmodule GoodleadsEx do
           quote do: unquote(acc) <> unquote(part)
       end)
 
+    # Build query param documentation
+    query_doc =
+      if has_query_params do
+        param_docs =
+          query_params
+          |> Enum.map(fn {name, desc} ->
+            "  - `#{name}` - #{desc}"
+          end)
+          |> Enum.join("\n")
+
+        "\n\n## Query Parameters\n\nPass as a keyword list in the last argument:\n\n#{param_docs}"
+      else
+        ""
+      end
+
     cond do
       response_module == nil && has_body ->
-        @doc "#{summary}\n\n#{description}"
+        @doc "#{summary}\n\n#{description}#{query_doc}"
         def unquote(func_name)(%Client{} = client, unquote_splicing(param_vars), params)
             when is_map(params) do
           path = unquote(path_concat)
 
           case Client.request(client, unquote(http_method), path, json: params) do
+            {:ok, _body} -> :ok
+            error -> error
+          end
+        end
+
+      response_module == nil && has_query_params ->
+        @doc "#{summary}\n\n#{description}#{query_doc}"
+        def unquote(func_name)(%Client{} = client, unquote_splicing(param_vars), opts \\ []) do
+          path = unquote(path_concat)
+          req_opts = if opts == [], do: [], else: [params: Map.new(opts)]
+
+          case Client.request(client, unquote(http_method), path, req_opts) do
             {:ok, _body} -> :ok
             error -> error
           end
@@ -184,12 +219,27 @@ defmodule GoodleadsEx do
         end
 
       has_body ->
-        @doc "#{summary}\n\n#{description}"
+        @doc "#{summary}\n\n#{description}#{query_doc}"
         def unquote(func_name)(%Client{} = client, unquote_splicing(param_vars), params)
             when is_map(params) do
           path = unquote(path_concat)
 
           case Client.request(client, unquote(http_method), path, json: params) do
+            {:ok, body} when is_map(body) ->
+              {:ok, unquote(response_module).from_map(body)}
+
+            error ->
+              error
+          end
+        end
+
+      has_query_params ->
+        @doc "#{summary}\n\n#{description}#{query_doc}"
+        def unquote(func_name)(%Client{} = client, unquote_splicing(param_vars), opts \\ []) do
+          path = unquote(path_concat)
+          req_opts = if opts == [], do: [], else: [params: Map.new(opts)]
+
+          case Client.request(client, unquote(http_method), path, req_opts) do
             {:ok, body} when is_map(body) ->
               {:ok, unquote(response_module).from_map(body)}
 

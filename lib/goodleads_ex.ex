@@ -40,7 +40,9 @@ defmodule GoodleadsEx do
     "Questionnaires" => "questionnaire",
     "Distributions" => "distribution",
     "LandingPages" => "landing_page",
+    "Returns" => "return",
     "Sites" => "site",
+    "Tags" => "tag",
     "Users" => "user"
   }
 
@@ -52,7 +54,9 @@ defmodule GoodleadsEx do
     "Questionnaires" => "questionnaires",
     "Distributions" => "distributions",
     "LandingPages" => "landing_pages",
+    "Returns" => "returns",
     "Sites" => "sites",
+    "Tags" => "tags",
     "Users" => "users"
   }
 
@@ -65,7 +69,11 @@ defmodule GoodleadsEx do
     "LeadRouterWeb.Api.V1.LeadsController.export" => "export_leads",
     "LeadRouterWeb.Api.V1.LeadsController.verify_phone" => "verify_lead_phone",
     "LeadRouterWeb.Api.V1.LeadsController.confirm_phone" => "confirm_lead_phone",
-    "LeadRouterWeb.Api.V1.DistributionsController.undistributed" => "list_undistributed_leads"
+    "LeadRouterWeb.Api.V1.DistributionsController.undistributed" => "list_undistributed_leads",
+    "LeadRouterWeb.Api.V1.CompaniesController.cap_status" => "get_company_cap_status",
+    "LeadRouterWeb.Api.V1.ReturnsController.approve" => "approve_return",
+    "LeadRouterWeb.Api.V1.ReturnsController.reject" => "reject_return",
+    "LeadRouterWeb.Api.V1.OrdersController.cancel" => "cancel_order"
   }
 
   # Generate API functions from OpenAPI paths

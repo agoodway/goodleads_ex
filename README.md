@@ -244,7 +244,7 @@ campaign.lead_count #=> 0
 
 # Get site config (colors, fonts, logos, analytics)
 {:ok, site} = GoodleadsEx.get_site(client, account, "my-site")
-site.site_name          #=> "HVAC Henry"
+site.site_name          #=> "Helpful Henry"
 site.ga_measurement_id  #=> "G-XXXXXXXXXX"
 site.colors             #=> %{"primary" => "#2563eb", ...}
 

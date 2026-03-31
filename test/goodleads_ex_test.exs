@@ -40,18 +40,18 @@ defmodule GoodleadsExTest do
       assert lead.status == "qualified"
     end
 
-    test "CompanyResponse from_map inherits Company fields via allOf" do
+    test "BuyerResponse from_map inherits Buyer fields via allOf" do
       map = %{
-        "id" => "comp-1",
-        "name" => "ACME Corp",
+        "id" => "buyer-1",
+        "name" => "ACME HVAC",
         "email" => "info@acme.com",
         "status" => "active"
       }
 
-      result = Schemas.CompanyResponse.from_map(map)
-      assert %Schemas.CompanyResponse{} = result
-      assert result.name == "ACME Corp"
-      assert result.id == "comp-1"
+      result = Schemas.BuyerResponse.from_map(map)
+      assert %Schemas.BuyerResponse{} = result
+      assert result.name == "ACME HVAC"
+      assert result.id == "buyer-1"
     end
 
     test "ListLeadsResponse from_map with array of lead refs" do
@@ -92,11 +92,11 @@ defmodule GoodleadsExTest do
       assert function_exported?(GoodleadsEx, :get_campaign, 3)
       assert function_exported?(GoodleadsEx, :update_campaign, 4)
 
-      assert function_exported?(GoodleadsEx, :list_companies, 2)
-      assert function_exported?(GoodleadsEx, :create_company, 3)
-      assert function_exported?(GoodleadsEx, :get_company, 3)
-      assert function_exported?(GoodleadsEx, :update_company, 4)
-      assert function_exported?(GoodleadsEx, :delete_company, 3)
+      assert function_exported?(GoodleadsEx, :list_buyers, 2)
+      assert function_exported?(GoodleadsEx, :create_buyer, 3)
+      assert function_exported?(GoodleadsEx, :get_buyer, 3)
+      assert function_exported?(GoodleadsEx, :update_buyer, 4)
+      assert function_exported?(GoodleadsEx, :delete_buyer, 3)
 
       assert function_exported?(GoodleadsEx, :list_orders, 3)
       assert function_exported?(GoodleadsEx, :create_order, 4)
@@ -107,8 +107,16 @@ defmodule GoodleadsExTest do
 
       assert function_exported?(GoodleadsEx, :verify_lead_phone, 3)
       assert function_exported?(GoodleadsEx, :confirm_lead_phone, 4)
+      assert function_exported?(GoodleadsEx, :confirm_lead_consent, 4)
       assert function_exported?(GoodleadsEx, :list_undistributed_leads, 2)
       assert function_exported?(GoodleadsEx, :get_questionnaire_schema, 1)
+
+      assert function_exported?(GoodleadsEx, :list_tracking_numbers, 3)
+      assert function_exported?(GoodleadsEx, :create_tracking_number, 4)
+      assert function_exported?(GoodleadsEx, :delete_tracking_number, 4)
+
+      assert function_exported?(GoodleadsEx, :get_buyer_cap_status, 3)
+      assert function_exported?(GoodleadsEx, :export_buyer_leads, 3)
     end
   end
 end

@@ -33,47 +33,52 @@ defmodule GoodleadsEx do
   }
 
   @resource_singular %{
+    "Buyers" => "buyer",
     "Campaigns" => "campaign",
-    "Companies" => "company",
+    "Distributions" => "distribution",
+    "LandingPages" => "landing_page",
     "Leads" => "lead",
     "Orders" => "order",
     "Questionnaires" => "questionnaire",
-    "Distributions" => "distribution",
-    "LandingPages" => "landing_page",
     "Returns" => "return",
     "Sites" => "site",
     "Tags" => "tag",
+    "TrackingNumbers" => "tracking_number",
     "Users" => "user"
   }
 
   @resource_plural %{
+    "Buyers" => "buyers",
     "Campaigns" => "campaigns",
-    "Companies" => "companies",
+    "Distributions" => "distributions",
+    "LandingPages" => "landing_pages",
     "Leads" => "leads",
     "Orders" => "orders",
     "Questionnaires" => "questionnaires",
-    "Distributions" => "distributions",
-    "LandingPages" => "landing_pages",
     "Returns" => "returns",
     "Sites" => "sites",
     "Tags" => "tags",
+    "TrackingNumbers" => "tracking_numbers",
     "Users" => "users"
   }
 
   # Explicit overrides for operationIds that don't map cleanly
   @func_name_overrides %{
+    "LeadRouterWeb.Api.V1.BuyersController.cap_status" => "get_buyer_cap_status",
+    "LeadRouterWeb.Api.V1.DistributionsController.undistributed" => "list_undistributed_leads",
+    "LeadRouterWeb.Api.V1.LeadsController.confirm_consent" => "confirm_lead_consent",
+    "LeadRouterWeb.Api.V1.LeadsController.confirm_phone" => "confirm_lead_phone",
+    "LeadRouterWeb.Api.V1.LeadsController.export" => "export_leads",
+    "LeadRouterWeb.Api.V1.LeadsController.export_for_buyer" => "export_buyer_leads",
+    "LeadRouterWeb.Api.V1.LeadsController.verify_phone" => "verify_lead_phone",
+    "LeadRouterWeb.Api.V1.OrdersController.activate" => "activate_order",
+    "LeadRouterWeb.Api.V1.OrdersController.cancel" => "cancel_order",
+    "LeadRouterWeb.Api.V1.OrdersController.pause" => "pause_order",
+    "LeadRouterWeb.Api.V1.QuestionnairesController.schema" => "get_questionnaire_schema",
     "LeadRouterWeb.Api.V1.QuestionnairesController.show_by_campaign" =>
       "get_campaign_questionnaire",
-    "LeadRouterWeb.Api.V1.QuestionnairesController.schema" => "get_questionnaire_schema",
-    "LeadRouterWeb.Api.V1.LeadsController.export_for_company" => "export_company_leads",
-    "LeadRouterWeb.Api.V1.LeadsController.export" => "export_leads",
-    "LeadRouterWeb.Api.V1.LeadsController.verify_phone" => "verify_lead_phone",
-    "LeadRouterWeb.Api.V1.LeadsController.confirm_phone" => "confirm_lead_phone",
-    "LeadRouterWeb.Api.V1.DistributionsController.undistributed" => "list_undistributed_leads",
-    "LeadRouterWeb.Api.V1.CompaniesController.cap_status" => "get_company_cap_status",
     "LeadRouterWeb.Api.V1.ReturnsController.approve" => "approve_return",
-    "LeadRouterWeb.Api.V1.ReturnsController.reject" => "reject_return",
-    "LeadRouterWeb.Api.V1.OrdersController.cancel" => "cancel_order"
+    "LeadRouterWeb.Api.V1.ReturnsController.reject" => "reject_return"
   }
 
   # Generate API functions from OpenAPI paths

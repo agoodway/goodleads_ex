@@ -83,32 +83,32 @@ defmodule GoodleadsEx.IntegrationTest do
     end
   end
 
-  describe "get_company/3" do
-    test "returns company fields directly (allOf alias)" do
+  describe "get_buyer/3" do
+    test "returns buyer fields directly (allOf alias)" do
       expect(Req, :request, fn opts ->
         assert opts[:method] == :get
-        assert opts[:url] == "http://localhost:4000/api/v1/accounts/test-account/companies/comp-1"
+        assert opts[:url] == "http://localhost:4000/api/v1/accounts/test-account/buyers/buyer-1"
 
         json_response(200, %{
-          "id" => "comp-1",
+          "id" => "buyer-1",
           "name" => "ACME HVAC",
           "status" => "active"
         })
       end)
 
-      assert {:ok, result} = GoodleadsEx.get_company(@client, @account, "comp-1")
-      assert %Schemas.CompanyResponse{} = result
+      assert {:ok, result} = GoodleadsEx.get_buyer(@client, @account, "buyer-1")
+      assert %Schemas.BuyerResponse{} = result
       assert result.name == "ACME HVAC"
     end
   end
 
   describe "create_order/4" do
-    test "creates an order under a company" do
+    test "creates an order under a buyer" do
       expect(Req, :request, fn opts ->
         assert opts[:method] == :post
 
         assert opts[:url] ==
-                 "http://localhost:4000/api/v1/accounts/test-account/companies/comp-1/orders"
+                 "http://localhost:4000/api/v1/accounts/test-account/buyers/buyer-1/orders"
 
         json_response(201, %{
           "id" => "order-1",
@@ -118,7 +118,7 @@ defmodule GoodleadsEx.IntegrationTest do
       end)
 
       assert {:ok, result} =
-               GoodleadsEx.create_order(@client, @account, "comp-1", %{quantity: 10})
+               GoodleadsEx.create_order(@client, @account, "buyer-1", %{quantity: 10})
 
       assert %Schemas.OrderResponse{} = result
     end
@@ -130,15 +130,50 @@ defmodule GoodleadsEx.IntegrationTest do
         assert opts[:method] == :post
 
         assert opts[:url] ==
-                 "http://localhost:4000/api/v1/accounts/test-account/companies/comp-1/orders/order-1/activate"
+                 "http://localhost:4000/api/v1/accounts/test-account/buyers/buyer-1/orders/order-1/activate"
 
         json_response(200, %{"id" => "order-1", "status" => "active"})
       end)
 
       assert {:ok, result} =
-               GoodleadsEx.activate_order(@client, @account, "comp-1", "order-1")
+               GoodleadsEx.activate_order(@client, @account, "buyer-1", "order-1")
 
       assert %Schemas.OrderResponse{} = result
+    end
+  end
+
+  describe "confirm_lead_consent/4" do
+    test "confirms consent for a lead" do
+      expect(Req, :request, fn opts ->
+        assert opts[:method] == :post
+
+        assert opts[:url] ==
+                 "http://localhost:4000/api/v1/accounts/test-account/leads/lead-1/confirm-consent"
+
+        assert opts[:json] == %{
+                 consent_proof: %{
+                   consent_text: "I agree to be contacted",
+                   consent_version: "v1.0"
+                 }
+               }
+
+        json_response(200, %{
+          "data" => %{
+            "id" => "lead-1",
+            "consent_given_at" => "2026-03-31T10:00:00Z"
+          }
+        })
+      end)
+
+      assert {:ok, result} =
+               GoodleadsEx.confirm_lead_consent(@client, @account, "lead-1", %{
+                 consent_proof: %{
+                   consent_text: "I agree to be contacted",
+                   consent_version: "v1.0"
+                 }
+               })
+
+      assert %Schemas.LeadResponse{} = result
     end
   end
 

@@ -78,7 +78,12 @@ defmodule GoodleadsEx do
     "LeadRouterWeb.Api.V1.QuestionnairesController.show_by_campaign" =>
       "get_campaign_questionnaire",
     "LeadRouterWeb.Api.V1.ReturnsController.approve" => "approve_return",
-    "LeadRouterWeb.Api.V1.ReturnsController.reject" => "reject_return"
+    "LeadRouterWeb.Api.V1.ReturnsController.reject" => "reject_return",
+    "LeadRouterWeb.Api.V1.LeadsController.check" => "check_lead",
+    "LeadRouterWeb.Api.V1.TrackingNumbersController.initialize_pool" =>
+      "initialize_tracking_number_pool",
+    "LeadRouterWeb.Api.V1.TrackingNumbersController.pool_health" =>
+      "get_tracking_number_pool_health"
   }
 
   # Generate API functions from OpenAPI paths

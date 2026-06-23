@@ -34,56 +34,112 @@ defmodule GoodleadsEx do
 
   @resource_singular %{
     "Buyers" => "buyer",
+    "CallFlows" => "call_flow",
+    "CampaignTrackingNumbers" => "campaign_tracking_number",
     "Campaigns" => "campaign",
     "Distributions" => "distribution",
+    "FieldCatalog" => "field_catalog_entry",
     "LandingPages" => "landing_page",
     "Leads" => "lead",
     "Orders" => "order",
+    "QuestionnaireExperiments" => "questionnaire_experiment",
+    "QuestionnaireVariants" => "questionnaire_variant",
     "Questionnaires" => "questionnaire",
     "Returns" => "return",
     "Sites" => "site",
     "Tags" => "tag",
+    "TrackedLinks" => "link",
     "TrackingNumbers" => "tracking_number",
-    "Users" => "user"
+    "Users" => "user",
+    "Verticals" => "vertical"
   }
 
   @resource_plural %{
     "Buyers" => "buyers",
+    "CallFlows" => "call_flows",
+    "CampaignTrackingNumbers" => "campaign_tracking_numbers",
     "Campaigns" => "campaigns",
     "Distributions" => "distributions",
+    "FieldCatalog" => "field_catalog",
     "LandingPages" => "landing_pages",
     "Leads" => "leads",
     "Orders" => "orders",
+    "QuestionnaireExperiments" => "questionnaire_experiments",
+    "QuestionnaireVariants" => "questionnaire_variants",
     "Questionnaires" => "questionnaires",
     "Returns" => "returns",
     "Sites" => "sites",
     "Tags" => "tags",
+    "TrackedLinks" => "links",
     "TrackingNumbers" => "tracking_numbers",
-    "Users" => "users"
+    "Users" => "users",
+    "Verticals" => "verticals"
   }
 
   # Explicit overrides for operationIds that don't map cleanly
   @func_name_overrides %{
     "LeadRouterWeb.Api.V1.BuyersController.cap_status" => "get_buyer_cap_status",
+    "LeadRouterWeb.Api.V1.CallFlowsController.references" => "get_call_flow_references",
+    "LeadRouterWeb.Api.V1.CallFlowsController.schema" => "get_call_flow_schema",
+    "LeadRouterWeb.Api.V1.CallFlowsController.validate" => "validate_call_flow",
+    "LeadRouterWeb.Api.V1.CampaignTrackingNumbersController.activate" =>
+      "activate_campaign_tracking_number",
+    "LeadRouterWeb.Api.V1.CampaignTrackingNumbersController.release" =>
+      "release_campaign_tracking_number",
     "LeadRouterWeb.Api.V1.DistributionsController.undistributed" => "list_undistributed_leads",
+    "LeadRouterWeb.Api.V1.ExternalRecordingController.complete" => "complete_lead_recording",
+    "LeadRouterWeb.Api.V1.ExternalRecordingController.start" => "start_lead_recording",
+    "LeadRouterWeb.Api.V1.GeoController.cities" => "list_geo_cities",
+    "LeadRouterWeb.Api.V1.GeoController.states" => "list_geo_states",
+    "LeadRouterWeb.Api.V1.LeadsController.check" => "check_lead",
+    "LeadRouterWeb.Api.V1.LeadsController.check_host" => "check_lead_host",
     "LeadRouterWeb.Api.V1.LeadsController.confirm_consent" => "confirm_lead_consent",
+    "LeadRouterWeb.Api.V1.LeadsController.confirm_consent_host" => "confirm_lead_consent_host",
     "LeadRouterWeb.Api.V1.LeadsController.confirm_phone" => "confirm_lead_phone",
+    "LeadRouterWeb.Api.V1.LeadsController.confirm_phone_host" => "confirm_lead_phone_host",
+    "LeadRouterWeb.Api.V1.LeadsController.create_host" => "create_lead_host",
     "LeadRouterWeb.Api.V1.LeadsController.export" => "export_leads",
     "LeadRouterWeb.Api.V1.LeadsController.export_for_buyer" => "export_buyer_leads",
+    "LeadRouterWeb.Api.V1.LeadsController.qualify_host" => "qualify_lead_host",
+    "LeadRouterWeb.Api.V1.LeadsController.sync_tags" => "sync_lead_tags",
+    "LeadRouterWeb.Api.V1.LeadsController.update_host" => "update_lead_host",
+    "LeadRouterWeb.Api.V1.LeadsController.upload_file" => "upload_lead_file",
+    "LeadRouterWeb.Api.V1.LeadsController.upload_file_host" => "upload_lead_file_host",
     "LeadRouterWeb.Api.V1.LeadsController.verify_phone" => "verify_lead_phone",
+    "LeadRouterWeb.Api.V1.LeadsController.verify_phone_host" => "verify_lead_phone_host",
     "LeadRouterWeb.Api.V1.OrdersController.activate" => "activate_order",
     "LeadRouterWeb.Api.V1.OrdersController.cancel" => "cancel_order",
     "LeadRouterWeb.Api.V1.OrdersController.pause" => "pause_order",
+    "LeadRouterWeb.Api.V1.QuestionnaireExperimentsController.declare_winner" =>
+      "declare_questionnaire_experiment_winner",
+    "LeadRouterWeb.Api.V1.QuestionnaireExperimentsController.start" =>
+      "start_questionnaire_experiment",
+    "LeadRouterWeb.Api.V1.QuestionnaireExperimentsController.stop" =>
+      "stop_questionnaire_experiment",
+    "LeadRouterWeb.Api.V1.QuestionnaireVariantsController.create_draft" =>
+      "create_questionnaire_variant_draft",
+    "LeadRouterWeb.Api.V1.QuestionnaireVariantsController.discard_draft" =>
+      "discard_questionnaire_variant_draft",
+    "LeadRouterWeb.Api.V1.QuestionnaireVariantsController.draft" =>
+      "get_questionnaire_variant_draft",
+    "LeadRouterWeb.Api.V1.QuestionnaireVariantsController.publish_draft" =>
+      "publish_questionnaire_variant_draft",
+    "LeadRouterWeb.Api.V1.QuestionnaireVariantsController.save_draft" =>
+      "save_questionnaire_variant_draft",
+    "LeadRouterWeb.Api.V1.QuestionnaireVariantsController.start_over" =>
+      "start_over_questionnaire_variant_draft",
     "LeadRouterWeb.Api.V1.QuestionnairesController.schema" => "get_questionnaire_schema",
+    "LeadRouterWeb.Api.V1.QuestionnairesController.show_admin" => "get_questionnaire_admin",
     "LeadRouterWeb.Api.V1.QuestionnairesController.show_by_campaign" =>
       "get_campaign_questionnaire",
     "LeadRouterWeb.Api.V1.ReturnsController.approve" => "approve_return",
     "LeadRouterWeb.Api.V1.ReturnsController.reject" => "reject_return",
-    "LeadRouterWeb.Api.V1.LeadsController.check" => "check_lead",
+    "LeadRouterWeb.Api.V1.TrackedLinksController.clicks" => "list_link_clicks",
     "LeadRouterWeb.Api.V1.TrackingNumbersController.initialize_pool" =>
       "initialize_tracking_number_pool",
     "LeadRouterWeb.Api.V1.TrackingNumbersController.pool_health" =>
-      "get_tracking_number_pool_health"
+      "get_tracking_number_pool_health",
+    "LeadRouterWeb.Api.V1.VersionController.show" => "get_version"
   }
 
   # Generate API functions from OpenAPI paths

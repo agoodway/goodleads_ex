@@ -117,6 +117,12 @@ defmodule GoodleadsExTest do
 
       assert function_exported?(GoodleadsEx, :get_buyer_cap_status, 3)
       assert function_exported?(GoodleadsEx, :export_buyer_leads, 3)
+
+      assert function_exported?(GoodleadsEx, :list_call_flows, 2)
+      assert function_exported?(GoodleadsEx, :get_call_flow_schema, 1)
+      assert function_exported?(GoodleadsEx, :list_geo_cities, 2)
+      assert function_exported?(GoodleadsEx, :get_version, 1)
+      assert function_exported?(GoodleadsEx, :create_lead_host, 2)
     end
   end
 end

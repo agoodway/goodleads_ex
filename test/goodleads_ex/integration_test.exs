@@ -51,12 +51,8 @@ defmodule GoodleadsEx.IntegrationTest do
         assert opts[:json] == %{first_name: "Jane", last_name: "Doe"}
 
         json_response(201, %{
-          "data" => %{
-            "id" => "new-lead-1",
-            "first_name" => "Jane",
-            "last_name" => "Doe",
-            "status" => "new"
-          }
+          "id" => "new-lead-1",
+          "token" => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test"
         })
       end)
 
@@ -158,7 +154,7 @@ defmodule GoodleadsEx.IntegrationTest do
                }
 
         json_response(200, %{
-          "data" => %{
+          "lead" => %{
             "id" => "lead-1",
             "consent_given_at" => "2026-03-31T10:00:00Z"
           }
@@ -173,7 +169,8 @@ defmodule GoodleadsEx.IntegrationTest do
                  }
                })
 
-      assert %Schemas.LeadResponse{} = result
+      assert %Schemas.ConfirmConsentResponse{} = result
+      assert %Schemas.Lead{} = result.lead
     end
   end
 
